@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+
+
+    <ui:define name="content">
+
+
+        <f:view >
+
+
+
+            <h:form id="visitaForm" binding="#{visitaFaces.form}" >
+                <p:growl id="messages" showDetail="true"/>
+                <h3 align="center">Acompanhamento In-Loco</h3>
+                <p:panelGrid columns="2" id="panel2"   >
+                    <h:outputText value="Data.:"/>
+                    <p:calendar value="#{visitaFaces.selectedVisita.data_visita}"  pattern="dd/MM/yyyy"/>
+
+                    <h:outputText value="Municipio.:"/>
+                    <p:selectOneMenu value="#{visitaFaces.selectedVisita.municipio}" converter="MunicipioConverter"  id="municipio"  >
+                        <f:selectItem itemValue="#{null}" itemLabel="#{null}"/>
+                        <f:selectItems value="#{municipioFaces.allMunicipios}" var="mun" itemLabel="#{mun.nome}" itemValue="#{mun}" />
+                        <p:ajax update="escola" listener="#{visitaFaces.mudaEscola}" immediate="false" />
+                    </p:selectOneMenu>
+
+
+                    <h:outputText value="Escolas.:"/>
+                    <p:selectOneMenu id="escola" value="#{visitaFaces.selectedVisita.escola}" converter="EscolaConverter"   >
+                        <f:selectItems value="#{visitaFaces.allescolas}" var="esc" itemLabel="#{esc.nomeEscola}" itemValue="#{esc}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputText value="Série.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.serie}" size="1" maxlength="1"  />
+                    <h:outputText value="Turma.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.turma}" size="1" maxlength="1"  />
+                    <h:outputText value="Turno.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.turno}" size="7" maxlength="7" />
+                    <h:outputText value="Professor(a).:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.nomeProfes}" size="50" maxlength="70"  />
+                    <h:outputText value="Coordenador(a).:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.nomeCoord}" size="50" maxlength="70" />
+                    <h:outputText value="Número de Alunos.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.numAlunos}" size="4" maxlength="4"  />
+                    <h:outputText value="Num. Alunos Presentes.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.numPresentes}" size="4" maxlength="4" />
+                    <h:outputText value="Num. Alunos Faltosos.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.numFaltosos}" size="4" maxlength="4" />
+                    <h:outputText value="Justificativa.:"/>
+                    <p:inputTextarea value="#{visitaFaces.selectedVisita.justificativa}"  rows="2" cols="48" maxlength="300"    autoResize="false" id="txt01" />
+                    <h:outputText value="Técnico(a) da Crede.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.tecnicoCrede}" size="50" maxlength="70" />
+                    <h:outputText value="Plano de Aula.:"/>
+                    <p:selectOneMenu value="#{visitaFaces.selectedVisita.planoAula}"  >
+                        <f:selectItem itemValue="#{null}" itemLabel="#{null}"/>
+                        <f:selectItems value="#{visitaFaces.planoAula}"/>
+                    </p:selectOneMenu>
+                    <h:outputText value="Rotina.:"/>
+                    <p:selectOneMenu value="#{visitaFaces.selectedVisita.rotina}" >
+                        <f:selectItem itemValue="#{null}" itemLabel="#{null}"/>
+                        <f:selectItems value="#{visitaFaces.rotinaList}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputText value="Aspectos Observados.:"/>
+                    <p:inputTextarea value="#{visitaFaces.selectedVisita.aspectos}"  rows="3" cols="48" maxlength="500"    autoResize="false" id="txt03" />
+                    <h:outputText value="Intervenção.:"/>
+                    <p:inputTextarea value="#{visitaFaces.selectedVisita.intervencao}"  rows="3" cols="48" maxlength="500"    autoResize="false" id="txt04" />
+
+
+                </p:panelGrid>
+                <br/>
+
+                <br/>
+              
+
+                <p:commandButton value="Novo"  icon="ui-icon-document" update="panel2" process="@this" actionListener="#{visitaFaces.reset}" />
+                <p:commandButton  icon="ui-icon-circle-check" value="Gravar" id="showDialogButton" onclick="confirmation.show()" type="button" />
+                <p:confirmDialog id="confirmDialog" message="Gravar Visita?" header="Gravando Dados" severity="alert" widgetVar="confirmation">
+                    <p:commandButton id="confirm" value="Sim" update="messages" oncomplete="confirmation.hide()" actionListener="#{visitaFaces.add}"/>
+                    <p:commandButton id="decline" value="Não" onclick="confirmation.hide()" type="button"/>
+
+                </p:confirmDialog>
+                  
+            </h:form>
+
+        </f:view>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+  
+    <ui:define name="content">
+        <f:view>
+            <h:form id="aluno">
+                <p:growl id="messages" showDetail="true"/>
+                <p:panelGrid columns="2" id="panel4">
+                    <f:facet name="header">
+                        Avaliação de Alunos em Visita
+                    </f:facet>
+                    <h:outputText value="Selecionar Visita.:"/>
+                    <p:selectOneMenu value="#{alunoFaces.selectedAluno.visita}" converter="VisitaConverter">
+                    
+                      <f:selectItems value="#{visitaFaces.allVisitas}" var="visita" itemLabel="Data: #{visita.data_visita} | Escola: #{visita.escola.nomeEscola} | Série: #{visita.serie} | Turma: #{visita.turma}" itemValue="#{visita}"/>
+                    </p:selectOneMenu>
+                    <h:outputText value="Nome do Aluno.:"/>
+                    <p:inputText value="#{alunoFaces.selectedAluno.nome}" size="50" maxlength="70" required="true" requiredMessage="Campo Obrigatório"/>
+                 
+                
+                </p:panelGrid> 
+                <br/><br/><br/>
+                <h:panelGrid columns="2" id="panel2">
+                    <p:fieldset legend="Audiência de Leitura"  toggleable="true" toggleSpeed="500" style="background: beige;width: 200px">
+                        <p:ajax event="toggle" listener="#{alunoFaces.handleToggle}" update="messages"/>
+                    <h:panelGrid columns="2">
+                        <h:outputText  value="Não Leitor.:"/>
+                        <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.naoLeitor}"/>
+                        <h:outputText  value="Palavra.:"/>
+                        <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.palavra}"/>
+                        <h:outputText  value="Frase.:"/>
+                        <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.frase}"/>
+                        <h:outputText  value="Texto S/ Fluência.:"/>
+                        <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.txt_sem_fluencia}"/>
+                        <h:outputText  value="Texto C/ Fluência.:"/>
+                        <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.txt_com_fluencia}"/>
+                       
+                    </h:panelGrid>
+                </p:fieldset>
+                    <p:fieldset legend="Audiência de Matemática"  toggleable="true" toggleSpeed="500" style="background: beige;width: 200px">
+                    <p:ajax event="toggle" listener="#{alunoFaces.handleToggle}" update="messages"/>
+                    <h:panelGrid columns="2">
+                        <h:outputText  value="Soma.:"/>
+                        <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.soma}"/>
+                        <h:outputText  value="Subtrai.:"/>
+                        <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.subtrai}"/>
+                        <h:outputText  value="Multiplica.:"/>
+                        <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.multiplica}"/>
+                        <h:outputText  value="Divide.:"/>
+                        <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.divide}"/>
+                          <h:outputText  value="Não Sabe.:"/>
+                         <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.nao_sabe}"/>
+                     </h:panelGrid>
+                </p:fieldset>
+                </h:panelGrid>
+                 <p:commandButton  icon="ui-icon-document"  value="Novo" update="panel4,panel2" process="@this" actionListener="#{alunoFaces.reset}" alt="Novo"/> 
+                 <p:commandButton  icon="ui-icon-circle-check" value="Gravar" id="showDialogButton" action="#{alunoFaces.editAluno}" ajax="false"/>
+                
+            </h:form>
+        </f:view>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+    <ui:define name="content">
+       
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true"/>
+            <h:panelGrid columns="2" id="panel3">
+                <f:facet name="header">
+                    <h3>Relação de Visitas por Data</h3>
+                </f:facet>
+                <h:outputText value="Selecione a Visita.:"/>
+                <p:selectOneMenu value="#{visitaFaces.selectedVisita}" converter="VisitaConverter">
+                    <f:selectItem itemLabel="#{null}" itemValue="#{null}"/>
+                    <f:selectItems value="#{visitaFaces.allVisitas}" var="vis" itemLabel="Data da Visita.: #{vis.data_visita} - Escola.:#{vis.escola.nomeEscola} - Município.: #{vis.escola.municipio.nome}" itemValue="#{vis}"/>
+                </p:selectOneMenu>
+
+
+            </h:panelGrid>
+            <br/>
+            <p:panel style="text-align:  center;background-color: #AFAFAF">
+                <p:commandButton value="Dados da Visita" action="#{visitaFaces.gerarRelatorio}" ajax="false" onclick="this.form.target='_blank'"  />
+                
+            </p:panel>
+            <br/>
+            <br/>
+            <br/>
+
+           
+
+
+
+              
+        </h:form>
+    </ui:define>
+
+</ui:composition>

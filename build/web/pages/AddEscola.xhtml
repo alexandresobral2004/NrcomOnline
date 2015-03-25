@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+   
+
+    <ui:define name="content">
+
+
+				
+        <f:view >
+             
+            <h:form id="addEscola" binding="#{visitaFaces.form}" >
+                <p:growl id="messages"/> 
+                <h:panelGrid columns="2" id="panel" >
+                    <f:facet name="header">
+                        <h3>Cadastro de Escolas</h3>
+                    </f:facet>
+                    <h:outputText value="Nome da Escola.:"/>
+                    <p:inputText value="#{escolaFaces.selectedEscola.nomeEscola}" size="60" maxlength="100"  required="true" requiredMessage="Campo Obrigatório" id="Escola" />
+                    <h:outputText value="Diretor.:"/>
+                    <p:inputText value="#{escolaFaces.selectedEscola.nomeDiretor}" size="40" maxlength="60" required="true" requiredMessage="Campo Obrigatório" id="Diretor"/>
+                     <h:outputText value="INEP.:"/>
+                     <p:inputText value="#{escolaFaces.selectedEscola.inep}" size="12" maxlength="60" required="true" requiredMessage="Campo Obrigatório" id="inep"/>
+                    <h:outputText value="Distrito/Sede.:"/>
+                    <p:selectOneMenu value="#{escolaFaces.selectedEscola.localidade}">
+                        <f:selectItem itemLabel="#{null}" itemValue="#{null}"/>
+                        <f:selectItems value="#{escolaFaces.localidade}"/>
+                    </p:selectOneMenu>
+                     <h:outputText value="Fone.:"/>
+                     <p:inputMask value="#{escolaFaces.selectedEscola.fone}" mask="(99)9999-9999" />
+                    <h:outputText value="Município.:"/>
+                    <p:selectOneMenu value="#{escolaFaces.selectedEscola.municipio}" converter="MunicipioConverter" required="true" requiredMessage="Campo Obrigatório" id="Município">
+                        <f:selectItem itemValue="#{null}" itemLabel="#{null}"/>
+                        <f:selectItems value="#{municipioFaces.allMunicipios}" var="mun" itemValue="#{mun}" itemLabel="#{mun.nome}"/>
+                     </p:selectOneMenu>
+                    
+                </h:panelGrid>
+                <br/>
+                <br/>
+                <p:panel id="pnlbutton" style="text-align:  center;background-color: #AFAFAF">
+                    
+                    <p:commandButton value="Novo" update="panel" process="@this" actionListener="#{escolaFaces.reset}" />
+                    <p:commandButton value="Gravar" update="messages,listEscolas"    action="#{escolaFaces.addEscola}" /> 
+                  
+                                                      
+                   
+                </p:panel>
+                <br/><br/>
+                <p:dataTable var="escola" value="#{escolaFaces.allEscolas}" editable="true" id="listEscolas"  
+                              paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="5,10,15">
+                    <f:facet name="header">
+                        Lista de Escolas Cadastradas
+                    </f:facet>
+
+                    <p:ajax event="rowEdit" listener="#{escolaFaces.onEdit}" update=":addEscola:messages" />
+                    <p:ajax event="rowEditCancel" listener="#{escolaFaces.onCancel}" update=":addEscola:messages"  />
+
+                    <p:column headerText="Escola" style="width:125px;text-align: center">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{escola.nomeEscola}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{escola.nomeEscola}" style="width:100%" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                     <p:column headerText="Diretor" style="width:125px;text-align: center">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{escola.nomeDiretor}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{escola.nomeDiretor}" style="width:100%" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    
+                   <p:column headerText="Editar - Apagar" style="width:50px;text-align: center">
+                                        <p:rowEditor />
+                                        <h:outputText value="        "/>
+                                        <p:commandButton action="#{escolaFaces.delEscola}" value="Apagar"  ajax="true" update="listEscolas" immediate="true">
+                                            <f:setPropertyActionListener target="#{escolaFaces.selectedEscola}" value="#{escola}"/>
+                                        </p:commandButton>
+
+                                        
+                    </p:column>
+                    
+                </p:dataTable>
+            </h:form>
+        </f:view>
+    </ui:define>
+
+</ui:composition>

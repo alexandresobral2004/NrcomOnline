@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+   
+
+    <ui:define name="content">
+        
+        <f:view>
+            <h:form id="form">
+                <p:growl id="messages" showDetail="true"/>
+                <h:panelGrid columns="2">
+                    <f:facet name="header">
+                        <h2>Cadastro de Usuários</h2>
+                    </f:facet>
+                    <h:outputText value="Login:"/>
+                    <p:inputText value="#{usuarioFaces.selectedUsuario.username}" size="15" maxlength="15" id="login" required="true" requiredMessage="Campo Obrigatório"/>
+                    <h:outputText value="Senha:"/>
+                    <p:inputText value="#{usuarioFaces.selectedUsuario.password}" size="15" maxlength="15" id="password" required="true" requiredMessage="Campo Obrigatório"/>
+                    <h:outputText value="Tipo de Usuário:"/>
+                    <p:selectOneMenu value="#{usuarioFaces.selectedUsuario.authority}">
+                        <f:selectItems value="#{usuarioFaces.permissoes}"/>
+                    </p:selectOneMenu>
+                    <h:outputText value="Nome do Usuário:"/>
+                    <p:inputText value="#{usuarioFaces.selectedUsuario.nome}" size="80" id="nome" required="true" requiredMessage="Campo Obrigatório"/>
+                </h:panelGrid> 
+                <br/>
+                <p:panel id="button" style="text-align:  center;background-color: #AFAFAF">
+                    <p:commandButton action="#{usuarioFaces.addUsuario()}" value="Gravar" ajax="false" update="userList"/>
+                </p:panel>
+                <br/>
+
+
+                <p:dataTable var="user" value="#{usuarioFaces.allUsuarios}" id="userList" editable="true">
+
+                    <f:facet name="header">
+                        Lista de Usuários
+                    </f:facet>
+
+                    <p:ajax event="rowEdit" listener="#{usuarioFaces.onEdit}" update=":form:messages" />
+                    <p:ajax event="rowEditCancel" listener="#{usuarioFaces.onCancel}" update=":form:messages" />
+
+                    <p:column headerText="Nome" style="width:30%">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.nome}"  />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{user.nome}" style="width:100%" label="Nome"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Login" style="width:20%">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.username}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{user.username}" style="width:100%" label="Login"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Senha" style="width:24%">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.password}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{user.password}" style="width:100%" label="Password" />   
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Nível" style="width:20%">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.authority}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{user.authority}" style="width:100%" label="Nível"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column style="width:6%">
+                        <p:rowEditor />
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+        </f:view>
+    </ui:define>
+
+</ui:composition>

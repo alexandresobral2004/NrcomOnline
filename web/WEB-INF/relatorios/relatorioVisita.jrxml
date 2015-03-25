@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioVisita" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/Users/alexandrerocha/NetBeansProjects/NrcomOnline/web/WEB-INF/relatorios/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="listaAlunos" class="java.util.Collection"/>
+	<parameter name="listaAlunos2" class="java.util.Collection"/>
+	<parameter name="subreport1" class="java.lang.String"/>
+	<parameter name="subreport2" class="java.lang.String"/>
+	<parameter name="paic" class="java.lang.Object"/>
+	<parameter name="paic2" class="java.lang.Object"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nomeProfes" class="java.lang.String">
+		<fieldDescription><![CDATA[nomeProfes]]></fieldDescription>
+	</field>
+	<field name="data_final" class="java.util.Date">
+		<fieldDescription><![CDATA[data_final]]></fieldDescription>
+	</field>
+	<field name="nomeCoord" class="java.lang.String">
+		<fieldDescription><![CDATA[nomeCoord]]></fieldDescription>
+	</field>
+	<field name="serie" class="java.lang.String">
+		<fieldDescription><![CDATA[serie]]></fieldDescription>
+	</field>
+	<field name="data_visita" class="java.util.Date">
+		<fieldDescription><![CDATA[data_visita]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="tecnicoCrede" class="java.lang.String">
+		<fieldDescription><![CDATA[tecnicoCrede]]></fieldDescription>
+	</field>
+	<field name="turma" class="java.lang.String">
+		<fieldDescription><![CDATA[turma]]></fieldDescription>
+	</field>
+	<field name="intervencao" class="java.lang.String">
+		<fieldDescription><![CDATA[intervencao]]></fieldDescription>
+	</field>
+	<field name="escola" class="MODEL.Escola">
+		<fieldDescription><![CDATA[escola]]></fieldDescription>
+	</field>
+	<field name="turno" class="java.lang.String">
+		<fieldDescription><![CDATA[turno]]></fieldDescription>
+	</field>
+	<field name="numFaltosos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[numFaltosos]]></fieldDescription>
+	</field>
+	<field name="aspectos" class="java.lang.String">
+		<fieldDescription><![CDATA[aspectos]]></fieldDescription>
+	</field>
+	<field name="justificativa" class="java.lang.String">
+		<fieldDescription><![CDATA[justificativa]]></fieldDescription>
+	</field>
+	<field name="rotina" class="java.lang.String">
+		<fieldDescription><![CDATA[rotina]]></fieldDescription>
+	</field>
+	<field name="planoAula" class="java.lang.String">
+		<fieldDescription><![CDATA[planoAula]]></fieldDescription>
+	</field>
+	<field name="municipio" class="MODEL.Municipio">
+		<fieldDescription><![CDATA[municipio]]></fieldDescription>
+	</field>
+	<field name="numPresentes" class="java.lang.Integer">
+		<fieldDescription><![CDATA[numPresentes]]></fieldDescription>
+	</field>
+	<field name="numAlunos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[numAlunos]]></fieldDescription>
+	</field>
+	<field name="aluno" class="java.util.Collection">
+		<fieldDescription><![CDATA[aluno]]></fieldDescription>
+	</field>
+	<field name="data_inicial" class="java.util.Date">
+		<fieldDescription><![CDATA[data_inicial]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="243" splitType="Stretch">
+			<rectangle radius="0">
+				<reportElement mode="Opaque" x="1" y="92" width="802" height="20" forecolor="#000000" backcolor="#93D09C"/>
+				<graphicElement fill="Solid"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="236" y="91" width="330" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Visita - NRCOM - 6ª CREDE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="0" width="258" height="52"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gestão de Visita Escolar NRCOM 6ª CREDE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="113" width="47" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Escola.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="48" y="113" width="224" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{escola}.nomeEscola]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="299" y="113" width="68" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Município.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="369" y="113" width="189" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{municipio}.nome]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="567" y="113" width="87" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Data da Visita.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="133" width="43" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Série.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="105" y="133" width="47" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Turma.:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="656" y="113" width="77" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{data_visita}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="46" y="133" width="44" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{serie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="133" width="28" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{turma}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="239" y="133" width="46" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{turno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="193" y="133" width="44" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Turno.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="401" y="133" width="180" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeCoord}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="294" y="133" width="105" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Coordenador(a).:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="401" y="153" width="180" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeProfes}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="318" y="153" width="81" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Professor(a).:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="173" width="121" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Alunos Presentes.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="124" y="173" width="39" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{numPresentes}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="55" y="193" width="67" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Ausentes.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="124" y="193" width="39" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{numFaltosos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="22" y="153" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Núm. de Alunos.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="124" y="153" width="39" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{numAlunos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="313" y="173" width="86" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Justificativa.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="401" y="173" width="404" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{justificativa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="213" width="121" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Técnico da Crede.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="124" y="213" width="296" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tecnicoCrede}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="418" y="213" width="89" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Plano de Aula.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="509" y="213" width="49" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{planoAula}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="567" y="213" width="49" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Rotina.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="618" y="213" width="50" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rotina}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="72" y="3" width="174" height="79"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{paic}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="654" y="0" width="174" height="83"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{paic2}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement mode="Opaque" x="1" y="-2" width="802" height="1" forecolor="#000000" backcolor="#93D09C"/>
+				<graphicElement fill="Solid">
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="53" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="3" width="802" height="50"/>
+				<subreportParameter name="listaAlunos">
+					<subreportParameterExpression><![CDATA[$P{listaAlunos}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{listaAlunos})]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "/relatorioVisita_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="185" splitType="Stretch">
+			<textField>
+				<reportElement x="148" y="108" width="654" height="43"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{intervencao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="50" y="108" width="98" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Intervenção.: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="148" y="42" width="654" height="43"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{aspectos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="42" width="147" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Aspectos Observados.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="753" y="158" width="49" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="5" y="165" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

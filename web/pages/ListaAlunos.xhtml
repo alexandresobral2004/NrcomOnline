@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:andii="http://javasemcafe.blogspot.com"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <f:view>
+            <h:form id="form">
+                <p:growl id="messages" showDetail="true"/>
+                    
+                <p:panelGrid columns="2" id="panel4">
+                    <f:facet name="header">
+                       Lista de Alunos por Visita
+                    </f:facet>
+                    <h:outputText value="Selecionar Visita.:"/>
+                    <p:selectOneMenu value="#{alunoFaces.selectedVisita}" converter="VisitaConverter">
+                        
+                        <f:selectItems value="#{visitaFaces.allVisitas}" var="visita" itemLabel="Data: #{visita.data_visita} | Escola: #{visita.escola.nomeEscola} | Série: #{visita.serie} | Turma: #{visita.turma}" itemValue="#{visita}"/>
+                    </p:selectOneMenu>
+                    
+                        
+                </p:panelGrid> 
+                    
+                    
+               <br/>
+            <p:panel style="text-align:  center;background-color: #AFAFAF">
+                <p:commandButton value="Buscar" action="#{alunoFaces.preencheAlunosPorVisita}" ajax="false"  />
+            </p:panel>
+            <br/>
+                    
+                <p:dataTable var="alu" value="#{alunoFaces.alunos}" id="listaAluno" editable="true"  >
+                    
+                    <f:facet name="header">
+                        Lista de Alunos por Visita
+                    </f:facet>
+                        
+                    <p:ajax event="rowEdit" listener="#{alunoFaces.onEdit}" update=":form:messages" />
+                    <p:ajax event="rowEditCancel" listener="#{alunoFaces.onCancel}" update=":form:messages" />
+                        
+                    <p:column headerText="Data da Visita" style="width:30%;text-align: center">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{alu.visita.data_visita}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" type="default"/>
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:calendar value="#{alu.visita.data_visita}"  pattern="dd/MM/yyyy"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Escola" style="width:60%;text-align: center">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{alu.visita.escola.nomeEscola}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu value="#{alu.visita.escola}" converter="EscolaConverter">
+                                    <f:selectItems value="#{escolaFaces.allEscolas}" var="esc" itemLabel="#{esc.nomeEscola}" itemValue="#{esc}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>      
+                        
+                    <p:column headerText="Série" style="width:20%;text-align: center">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{alu.visita.serie}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{alu.visita.serie}" style="width:100%;text-align: center" label="Série"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Nome do Aluno" style="width:20%;text-align: center">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{alu.nome}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{alu.nome}" style="width:100%;text-align: center" label="Year"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                        
+                    <p:column style="width:100%;text-align: center">
+                        
+                        
+                        <f:facet name="header">
+                            <h:outputText value="EDITAR   -    APAGAR" />
+                        </f:facet>
+                        <p:commandButton id="modalDialogButton" icon="ui-icon-pencil" onclick="dlg2.show();"   update=":form:panel5" >
+                            <f:setPropertyActionListener value="#{alu}" target="#{alunoFaces.selectedAluno}" /> 
+                            
+                        </p:commandButton> 
+                        <p:commandButton id="apaga" icon="ui-icon-trash" action="#{alunoFaces.delAluno}"  update="listaAluno" >
+                            <f:setPropertyActionListener value="#{alu}" target="#{alunoFaces.selectedAluno}" /> 
+                            
+                        </p:commandButton> 
+                            
+                            
+                            
+                            
+                    </p:column>
+                        
+                </p:dataTable>
+            <p:dialog id="modal" header="Modal Dialog" widgetVar="dlg2" modal="true" height="500"  >
+                    
+                 
+                <p:panelGrid columns="2" id="panel5" style="text-align: left">
+                    <f:facet name="header">
+                        Avaliação de Alunos em Visita
+                    </f:facet>
+                    <h:outputText value="Selecionar Visita.:"/>
+                    <p:selectOneMenu value="#{alunoFaces.selectedAluno.visita}" converter="VisitaConverter">
+                        
+                        <f:selectItems value="#{visitaFaces.allVisitas}" var="visita" itemLabel="Data: #{visita.data_visita} | Escola: #{visita.escola.nomeEscola} | Série: #{visita.serie} | Turma: #{visita.turma}" itemValue="#{visita}"/>
+                    </p:selectOneMenu>
+                    <h:outputText value="Nome do Aluno.:"/>
+                    <p:inputText value="#{alunoFaces.selectedAluno.nome}" size="50" maxlength="70" />
+                        
+                    <p:fieldset legend="Audiência de Leitura"  toggleable="true" toggleSpeed="500" style="background: beige;width: 200px">
+                        <p:ajax event="toggle" listener="#{alunoFaces.handleToggle}" update="messages"/>
+                        <h:panelGrid columns="2">
+                            <h:outputText  value="Não Leitor.:"/>
+                            <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.naoLeitor}"/>
+                            <h:outputText  value="Palavra.:"/>
+                            <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.palavra}"/>
+                            <h:outputText  value="Frase.:"/>
+                            <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.frase}"/>
+                            <h:outputText  value="Texto S/ Fluência.:"/>
+                            <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.txt_sem_fluencia}"/>
+                            <h:outputText  value="Texto C/ Fluência.:"/>
+                            <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.txt_com_fluencia}"/>
+                                
+                        </h:panelGrid>
+                    </p:fieldset>
+                        
+                    <p:fieldset legend="Audiência de Matemática"  toggleable="true" toggleSpeed="500" style="background: beige;width: 200px">
+                        <p:ajax event="toggle" listener="#{alunoFaces.handleToggle}" update="messages"/>
+                        <h:panelGrid columns="2">
+                            <h:outputText  value="Soma.:"/>
+                            <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.soma}"/>
+                            <h:outputText  value="Subtrai.:"/>
+                            <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.subtrai}"/>
+                            <h:outputText  value="Multiplica.:"/>
+                            <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.multiplica}"/>
+                            <h:outputText  value="Divide.:"/>
+                            <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.divide}"/>
+                            <h:outputText  value="Não Sabe.:"/>
+                            <p:selectBooleanCheckbox value="#{alunoFaces.selectedAluno.nao_sabe}"/>
+                                
+                                
+                        </h:panelGrid>
+                    </p:fieldset>
+                </p:panelGrid>
+
+                            
+                    <p:commandButton action="#{alunoFaces.editAluno}" icon="ui-icon-circle-check"  ajax="false" value="Editar" update=":form:listaAluno"/>
+                          
+                                
+                 
+                </p:dialog>
+            
+                    
+            </h:form>
+
+          
+        </f:view>
+       
+               
+           
+            
+    </ui:define>
+     
+
+</ui:composition>

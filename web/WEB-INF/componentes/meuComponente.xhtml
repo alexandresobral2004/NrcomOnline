@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:andii="http://javasemcafe.blogspot.com"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:wsosft="http://www.springframework.org/security/facelets/tags">
+
+    <ui:component>
+        
+        <h:form>
+            <p:growl id="messages"/>
+
+            <p:menubar autoDisplay="false">
+                <wsosft:ifAnyGranted roles="ROLE_ADMIN">
+                    
+               
+   
+                <p:submenu label="Cadastros">
+                    
+                    <p:submenu label="Escola" >
+                        
+                        <p:menuitem value="Nova Escola"   action="#{escolaFaces.startAddEscola}" ajax="false" />
+                             
+                          
+                    </p:submenu>
+                   <p:submenu label="Usuários" >
+                        
+                       <p:menuitem value="Novo Usuário"    action="#{usuarioFaces.startAddUsuario}" ajax="false" />
+                              
+                         
+                    </p:submenu>
+
+                    
+
+                </p:submenu>
+                   
+                </wsosft:ifAnyGranted>  
+                <wsosft:ifAnyGranted roles="ROLE_USER,ROLE_ADMIN">
+                    
+               
+                <p:submenu label="Visitas">
+              
+                    <p:menuitem value="Adicionar Visita"   action="#{visitaFaces.startAddVisita}" ajax="false"  />
+                    <p:menuitem value="Listar Visitas"    action="#{visitaFaces.startAListVisitas}" ajax="false"/>
+                  
+                </p:submenu>
+                    <p:submenu label="Alunos">
+                         <p:menuitem value="Adicionar Alunos"   action="#{alunoFaces.startAddAluno}" ajax="false"  />
+                         <p:menuitem value="Listar Alunos/Visita"   action="#{alunoFaces.startAddListaAlunos}" ajax="false"  />
+              </p:submenu>   
+              <p:submenu label="Relatórios">
+                  <p:menuitem value="Relatório Visita"    action="#{visitaFaces.startAddRelatorio}" ajax="false"/> 
+               </p:submenu>
+                    
+          </wsosft:ifAnyGranted>   
+                <p:menuitem value="Sair"   url="/j_spring_security_logout" action="http://187.76.147.150:8081/nrcomonline/" ajax="false" />
+            </p:menubar>
+
+
+        </h:form>
+    </ui:component>
+</html>

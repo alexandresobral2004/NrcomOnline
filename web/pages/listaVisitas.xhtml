@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../Template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    
+
+    <ui:define name="content">
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true"/>
+            <h:panelGrid columns="2" id="panel3">
+                <f:facet name="header">
+                    <h3>Relação de Visitas por Data</h3>
+                </f:facet>
+                <h:outputText value="Data Inicial.:"/>
+                <p:calendar value="#{visitaFaces.selectedVisita.data_inicial}" pattern="dd/MM/yyyy" size="10" />
+                    
+                
+                <h:outputText value="Data Final.:"/>
+                <p:calendar value="#{visitaFaces.selectedVisita.data_final}" pattern="dd/MM/yyyy" size="10" />
+                    
+               
+                
+            </h:panelGrid>
+            <br/>
+            <p:panel style="text-align:  center;background-color: #AFAFAF">
+            <p:commandButton value="Buscar" action="#{visitaFaces.visitasPorDate}" ajax="false"  />
+            </p:panel>
+            <br/>
+            <br/>
+            <br/>
+            
+            <p:dataTable var="vis" value="#{visitaFaces.visitas}" id="visLista" editable="true" resizableColumns="true">
+        
+            
+
+        <f:facet name="header">
+            Lista de Visitas por Data
+        </f:facet>
+
+              <p:ajax event="rowEdit" listener="#{visitaFaces.onEdit}" update=":form:messages" />
+              <p:ajax event="rowEditCancel" listener="#{visitaFaces.onCancel}" update=":form:messages" />
+
+        <p:column headerText="Escola" style="width:30%;text-align: center">
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{vis.escola.nomeEscola}" />
+                </f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{vis.escola.nomeEscola}" style="width:100%;text-align: center"/>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+         <p:column headerText="Município" style="width:30%;text-align: center">
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{vis.escola.municipio.nome}" />
+                </f:facet>
+                <f:facet name="input">
+                    <p:selectOneMenu value="#{vis.escola.municipio}">
+                        <f:selectItems value="#{municipioFaces.allMunicipios}" var="mun" itemLabel="#{mun.nome}" itemValue="#{mun}"/>
+                    </p:selectOneMenu>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>      
+
+        <p:column headerText="Técnico(a) Crede" style="width:20%;text-align: center">
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{vis.tecnicoCrede}" />
+                </f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{vis.tecnicoCrede}" style="width:100%;text-align: center" label="Year"/>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+
+        
+
+        <p:column headerText="Data da Visita" style="width:20%;text-align: center">
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{vis.data_visita}" >
+                        <f:convertDateTime pattern="dd/MM/yyyy" type="default"/>
+                    </h:outputText>
+                </f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{vis.data_visita}" style="width:100%;text-align: center" label="Data">
+                    <f:convertDateTime pattern="dd/MM/yyyy" type="default"/>
+                    </p:inputText>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+              <p:column style="text-align: center" >
+           
+            <f:facet name="header">
+                    <h:outputText value="EDITAR   -    APAGAR" />
+                </f:facet>
+            
+                 <p:commandButton id="modalDialogButton" icon="ui-icon-pencil" onclick="dlg2.show();"   update=":form:panel5" >
+                     <f:setPropertyActionListener value="#{vis}" target="#{visitaFaces.selectedVisita}" /> 
+                            
+                        </p:commandButton> 
+            
+            <h:outputText value="   -   "/>
+            <p:commandButton action="#{visitaFaces.del}"  icon="ui-icon-trash" update="form:visLista" ajax="false" >
+                <f:setPropertyActionListener target="#{visitaFaces.selectedVisita}" value="#{vis}"/> 
+            </p:commandButton>
+            
+         </p:column>
+
+    </p:dataTable>
+            <p:dialog id="modal" header="Editar Visita" widgetVar="dlg2" modal="true" height="500"  width="600" >
+                
+                
+                <p:panelGrid columns="2" id="panel5" style="text-align: left">
+                    <f:facet name="header">
+                        Edição de Visita Escolar
+                    </f:facet>
+                    <h:outputText value="Data.:"/>
+                    <p:calendar value="#{visitaFaces.selectedVisita.data_visita}"  pattern="dd/MM/yyyy"/>
+                        
+                    <h:outputText value="Municipio.:"/>
+                    <p:selectOneMenu value="#{visitaFaces.selectedVisita.municipio}" converter="MunicipioConverter"  id="municipio"  >
+                        
+                        <f:selectItems value="#{municipioFaces.allMunicipios}" var="mun" itemLabel="#{mun.nome}" itemValue="#{mun}" />
+                        <p:ajax update="escola" listener="#{visitaFaces.mudaEscola}" immediate="false" />
+                    </p:selectOneMenu>
+                    <h:outputText value="Escolas.:"/>
+                    <p:selectOneMenu id="escola" value="#{visitaFaces.selectedVisita.escola}" converter="EscolaConverter"   >
+                        <f:selectItems value="#{visitaFaces.allescolas}" var="esc" itemLabel="#{esc.nomeEscola}" itemValue="#{esc}"/>
+                    </p:selectOneMenu>
+                    <h:outputText value="Série.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.serie}" size="1" maxlength="1"  />
+                    <h:outputText value="Turma.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.turma}" size="1" maxlength="1"  />
+                    <h:outputText value="Turno.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.turno}" size="7" maxlength="7" />
+                    <h:outputText value="Professor.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.nomeProfes}" size="50" maxlength="70" />
+                    <h:outputText value="Coordenador.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.nomeCoord}" size="50" maxlength="70" />
+                    <h:outputText value="Número de Alunos.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.numAlunos}" size="4" maxlength="4"  />
+                    <h:outputText value="Num. Alunos Presentes.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.numPresentes}" size="4" maxlength="4" />
+                    <h:outputText value="Num. Alunos Faltosos.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.numFaltosos}" size="4" maxlength="4" />
+                    <h:outputText value="Justificativa.:"/>
+                    <p:inputTextarea value="#{visitaFaces.selectedVisita.justificativa}"  rows="2" cols="48" maxlength="300"    autoResize="false" id="txt01" />
+                    <h:outputText value="Técnico da Crede.:"/>
+                    <p:inputText value="#{visitaFaces.selectedVisita.tecnicoCrede}" size="50" maxlength="70" />
+                    <h:outputText value="Plano de Aula.:"/>
+                    <p:selectOneMenu value="#{visitaFaces.selectedVisita.planoAula}"  >
+                        <f:selectItem itemValue="#{null}" itemLabel="#{null}"/>
+                        <f:selectItems value="#{visitaFaces.planoAula}"/>
+                    </p:selectOneMenu>
+                    <h:outputText value="Rotina.:"/>
+                    <p:selectOneMenu value="#{visitaFaces.selectedVisita.rotina}" >
+                        <f:selectItem itemValue="#{null}" itemLabel="#{null}"/>
+                        <f:selectItems value="#{visitaFaces.rotinaList}"/>
+                    </p:selectOneMenu>
+                        
+                    <h:outputText value="Aspectos Observados.:"/>
+                    <p:inputTextarea value="#{visitaFaces.selectedVisita.aspectos}"  rows="3" cols="48" maxlength="300"    autoResize="false" id="txt03" />
+                    <h:outputText value="Intervenção.:"/>
+                    <p:inputTextarea value="#{visitaFaces.selectedVisita.intervencao}"  rows="3" cols="48" maxlength="300"    autoResize="false" id="txt04" />
+                        
+                </p:panelGrid>
+                    
+                    
+                <p:commandButton action="#{visitaFaces.set}" icon="ui-icon-circle-check"  ajax="false" value="Editar" update=":form:listaAluno"/>
+                    
+                    
+                    
+            </p:dialog>
+        </h:form>	
+    </ui:define>
+
+</ui:composition>

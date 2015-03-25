@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreport" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language=" ">
+		<![CDATA[SELECT
+     escola.`nomeEscola` AS escola_nomeEscola,
+     visita.`data_visita` AS visita_data_visita
+FROM
+     `escola` escola,
+     `visita` visita]]>
+	</queryString>
+	<field name="escola_nomeEscola" class="java.lang.String"/>
+	<field name="visita_data_visita" class="java.sql.Date"/>
+	<group name="escola_nomeEscola">
+		<groupExpression><![CDATA[$F{escola_nomeEscola}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="136" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[escola_nomeEscola]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[visita_data_visita]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="136" y="42" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{escola_nomeEscola}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="54" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{visita_data_visita}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
